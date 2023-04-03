@@ -29,7 +29,6 @@ const handleSearchFormSubmit = async event => {
   pixabayApi.q = searchQuery;
   pixabayApi.page = 1;
 
-
   try {
     const { data } = await pixabayApi.fetchPhotos();
     // console.log(data);
@@ -43,7 +42,7 @@ const handleSearchFormSubmit = async event => {
     Notify.success(`Hooray! We found ${data.totalHits} images.`);
 
     galleryListEl.innerHTML = createGalleryCards(data.hits);
-    loadMoreBtnEl.classList.remove('is-hidden');
+    // loadMoreBtnEl.classList.remove('is-hidden');
     simpleLightBoxGalleryInit();
 
     const pagesSum = Math.ceil(data.totalHits / pixabayApi.per_page);
@@ -137,11 +136,11 @@ function checkPosition() {
   const height = document.body.offsetHeight;
   const screenHeight = window.innerHeight;
   const scrolled = window.scrollY;
-  console.log(scrolled);
+  // console.log(scrolled);
   const threshold = height - screenHeight / 4;
   const position = scrolled + screenHeight;
 
-  if (position >= threshold && pixabayApi.page > 1) {
+  if (position >= threshold) {
     handleScrollDown();
   }
 }
