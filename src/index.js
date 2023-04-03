@@ -42,7 +42,7 @@ const handleSearchFormSubmit = async event => {
     Notify.success(`Hooray! We found ${data.totalHits} images.`);
 
     galleryListEl.innerHTML = createGalleryCards(data.hits);
-    // loadMoreBtnEl.classList.remove('is-hidden');
+    loadMoreBtnEl.classList.remove('is-hidden');
     simpleLightBoxGalleryInit();
 
     const pagesSum = Math.ceil(data.totalHits / pixabayApi.per_page);
@@ -68,6 +68,7 @@ const handleLoadMoreBtnClick = async () => {
     );
     smoothScroll();
     simpleLightBoxGalleryRefresh();
+    loadMoreBtnEl.classList.add('is-hidden');
 
     const pagesSum = Math.ceil(data.totalHits / pixabayApi.per_page);
 
@@ -140,7 +141,8 @@ function checkPosition() {
   const threshold = height - screenHeight / 4;
   const position = scrolled + screenHeight;
 
-  if (position >= threshold) {
+  if (position >= threshold && pixabayApi.page > 1) {
+    loadMoreBtnEl.classList.add('is-hidden');
     handleScrollDown();
   }
 }
